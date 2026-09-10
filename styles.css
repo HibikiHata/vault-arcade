@@ -1,0 +1,359 @@
+/*
+ * Vault Arcade のスタイル。色・余白は Obsidian のテーマ変数のみを使い、値を直書きしない。
+ * モバイルではタッチ対象を 44px 以上にする。
+ */
+/* ビュー全体がスワイプ面。ペインの高さいっぱいに広げ、タッチの既定動作を止める */
+.vault-arcade-view {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--size-4-3);
+	padding: var(--size-4-4);
+	min-height: 100%;
+	touch-action: none;
+	user-select: none;
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+}
+
+.vault-arcade-hud {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--size-4-2) var(--size-4-4);
+	width: min(100%, 480px, 70vh);
+	font-weight: var(--font-semibold);
+	color: var(--text-normal);
+}
+
+/* HUD の各項目は途中で改行せず、狭いペインでは項目ごとに折り返す（結果文「You won · Score 71」を割らない） */
+.vault-arcade-hud > span {
+	white-space: nowrap;
+}
+
+/* HUD のボタン。tick ゲームのプレイ中・一時停止中は Pause / Resume、結果が出た直後は Results */
+.vault-arcade-hud-pause {
+	min-height: 44px;
+	min-width: 0;
+	padding: 0 var(--size-4-3);
+	white-space: nowrap;
+}
+.vault-arcade-hud-pause.is-hidden {
+	display: none;
+}
+
+/* 盤面。正方形をペインの短辺に収める（AC-018）。タッチの既定動作は iPhone で検証した抑止策で止める */
+.vault-arcade-board {
+	position: relative;
+	width: min(100%, 480px, 70vh);
+	aspect-ratio: 1 / 1;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+	overflow: hidden;
+	outline: none;
+	touch-action: none;
+	user-select: none;
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+}
+.vault-arcade-board:focus-visible {
+	box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
+}
+
+.vault-arcade-canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+/* メニュー表示中の盤面: 正方形の枠をやめて内容の高さにする。幅の式は遊ぶときと同じ（プリセットの可用判定を揃える） */
+.vault-arcade-board.is-menu {
+	aspect-ratio: auto;
+	border: none;
+	overflow: visible;
+	touch-action: pan-y;
+}
+/* メニュー表示中のビュー: ページの縦パンを許す（touch-action は祖先との積で決まる） */
+.vault-arcade-view.is-menu {
+	touch-action: pan-y;
+}
+
+/* オーバーレイ画面（S-01 / S-03 / S-04）。running のときは is-hidden で消す */
+.vault-arcade-overlay {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: var(--size-4-2);
+	padding: var(--size-4-4);
+	background: var(--background-primary);
+	color: var(--text-normal);
+	text-align: center;
+}
+.vault-arcade-overlay.is-hidden {
+	display: none;
+}
+/* メニューは盤面の枠の外に通常フローで置く（内側スクロールなし。ページが縦にパンする） */
+.vault-arcade-overlay.is-menu {
+	position: static;
+	justify-content: flex-start;
+	overflow: visible;
+	padding: 0;
+	touch-action: pan-y;
+}
+.vault-arcade-overlay--dim {
+	background: var(--background-modifier-cover);
+}
+.vault-arcade-overlay h3 {
+	margin: 0;
+}
+.vault-arcade-overlay p {
+	margin: 0;
+	color: var(--text-muted);
+}
+.vault-arcade-newhigh {
+	color: var(--text-accent);
+	font-weight: var(--font-semibold);
+}
+
+.vault-arcade-controls {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: var(--size-4-3);
+	margin-top: var(--size-4-2);
+}
+.vault-arcade-controls button {
+	min-height: 44px;
+	min-width: 88px;
+}
+
+.vault-arcade-speed {
+	display: flex;
+	align-items: center;
+	gap: var(--size-4-2);
+	min-height: 44px;
+}
+
+/* スクリーンリーダー向けの通知領域。視覚的には隠す */
+.vault-arcade-live {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+}
+
+/* ゲーム選択メニュー（S-01）。上部に共有の速度セレクタ 1 行、各行はタイトル・Best・Play */
+.vault-arcade-menu {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-4-3);
+	width: 100%;
+	max-width: 360px;
+}
+.vault-arcade-menu-entry {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--size-4-2);
+	padding: var(--size-4-2) var(--size-4-3);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+	background: var(--background-secondary);
+	text-align: left;
+}
+.vault-arcade-menu-text {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-2-1);
+	flex: 1 1 auto;
+	min-width: 0;
+}
+/* 幅が足りないときは折り返さずタイトルを縮める（Play とセレクタを 1 行に保つ） */
+.vault-arcade-menu-text strong {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.vault-arcade-menu-entry .vault-arcade-controls button {
+	min-width: 72px;
+}
+/* ゲーム固有の選択肢（Minesweeper の盤面）。行を 1 列に保つため縮まず、Play の左に置く */
+.vault-arcade-menu-variant {
+	display: flex;
+	align-items: center;
+	min-height: 44px;
+	flex: 0 0 auto;
+}
+.vault-arcade-menu-best {
+	color: var(--text-muted);
+}
+.vault-arcade-menu-entry .vault-arcade-controls {
+	margin-top: 0;
+}
+
+/* 2048 の盤面（DOM）。背景セル 16 個のグリッドの上に、タイル層を重ねる。
+ * タイルの位置は CSS 変数 --row/--col、スライドは --dx/--dy と transform のトランジション。
+ * 色は値の段階ごとにテーマの拡張色を使う */
+.vault-arcade-grid {
+	--vault-arcade-gap: var(--size-4-2);
+	position: absolute;
+	inset: 0;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: repeat(4, 1fr);
+	gap: var(--vault-arcade-gap);
+	padding: var(--vault-arcade-gap);
+	background: var(--background-secondary);
+}
+.vault-arcade-cell {
+	border-radius: var(--radius-m);
+	background: var(--background-primary);
+}
+.vault-arcade-tiles {
+	position: absolute;
+	inset: var(--vault-arcade-gap);
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: repeat(4, 1fr);
+	gap: var(--vault-arcade-gap);
+	pointer-events: none;
+}
+.vault-arcade-tile {
+	grid-column: calc(var(--col) + 1);
+	grid-row: calc(var(--row) + 1);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: var(--radius-m);
+	background: var(--background-modifier-hover);
+	color: var(--text-normal);
+	font-weight: var(--font-bold);
+	font-size: 1.6em;
+	font-variant-numeric: tabular-nums;
+	user-select: none;
+	-webkit-user-select: none;
+	transform: translate(0, 0) scale(1);
+}
+/* スライド: 移動量（セル数）× (タイル幅 + 隙間) */
+.vault-arcade-tile--moving {
+	transform: translate(
+		calc(var(--dx) * (100% + var(--vault-arcade-gap))),
+		calc(var(--dy) * (100% + var(--vault-arcade-gap)))
+	);
+	transition: transform 100ms ease-out;
+	z-index: 1;
+}
+.vault-arcade-tile--spawn {
+	animation: vault-arcade-spawn 120ms ease-out;
+}
+.vault-arcade-tile--merged {
+	animation: vault-arcade-pop 140ms ease-out;
+}
+@keyframes vault-arcade-spawn {
+	from { transform: scale(0.4); opacity: 0.2; }
+	to { transform: scale(1); opacity: 1; }
+}
+@keyframes vault-arcade-pop {
+	0% { transform: scale(1); }
+	50% { transform: scale(1.12); }
+	100% { transform: scale(1); }
+}
+/* 視差効果を減らす設定では動かさない */
+@media (prefers-reduced-motion: reduce) {
+	.vault-arcade-tile--moving { transition: none; }
+	.vault-arcade-tile--spawn,
+	.vault-arcade-tile--merged { animation: none; }
+}
+.vault-arcade-tile--wide {
+	font-size: 1.15em;
+}
+.vault-arcade-tile--t1 { background: rgba(var(--color-yellow-rgb), 0.18); }
+.vault-arcade-tile--t2 { background: rgba(var(--color-yellow-rgb), 0.32); }
+.vault-arcade-tile--t3 { background: rgba(var(--color-orange-rgb), 0.3); }
+.vault-arcade-tile--t4 { background: rgba(var(--color-orange-rgb), 0.5); }
+.vault-arcade-tile--t5 { background: rgba(var(--color-red-rgb), 0.35); }
+.vault-arcade-tile--t6 { background: rgba(var(--color-red-rgb), 0.55); }
+.vault-arcade-tile--t7 { background: rgba(var(--color-pink-rgb), 0.45); }
+.vault-arcade-tile--t8 { background: rgba(var(--color-purple-rgb), 0.4); }
+.vault-arcade-tile--t9 { background: rgba(var(--color-purple-rgb), 0.6); }
+.vault-arcade-tile--t10 { background: rgba(var(--color-blue-rgb), 0.55); }
+.vault-arcade-tile--t11 {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+}
+
+/* Minesweeper の盤面（DOM）。padding と gap を 0 にして「盤面幅 ÷ 列数 = セル幅」を厳密に保つ（AC-024）。
+ * セルの区切りは inset の box-shadow。数字の色はテーマの拡張色（黄は可読性が低いので使わない） */
+.vault-arcade-ms {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	grid-template-columns: repeat(var(--cols), 1fr);
+	grid-template-rows: repeat(var(--rows), 1fr);
+	background: var(--background-secondary);
+}
+.vault-arcade-ms-cell {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--background-modifier-hover);
+	box-shadow: inset 0 0 0 1px var(--background-secondary);
+	color: var(--text-normal);
+	font-weight: var(--font-bold);
+	font-variant-numeric: tabular-nums;
+	line-height: 1;
+	user-select: none;
+	-webkit-user-select: none;
+}
+.vault-arcade-ms-cell.is-holding {
+	background: var(--background-modifier-border);
+}
+.vault-arcade-ms-cell.is-open {
+	background: var(--background-primary);
+}
+.vault-arcade-ms-cell.is-flag {
+	color: var(--color-red);
+}
+/* 敗北後、地雷でない場所の旗: 旗を薄くして赤い ✕ を重ねる */
+.vault-arcade-ms-cell {
+	position: relative;
+}
+.vault-arcade-ms-cell.is-flag.is-wrong {
+	color: var(--text-faint);
+}
+.vault-arcade-ms-cell.is-flag.is-wrong::after {
+	content: '✕';
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--text-error);
+	font-size: 1.3em;
+}
+.vault-arcade-ms-cell.is-mine {
+	color: var(--text-normal);
+}
+.vault-arcade-ms-cell.is-exploded {
+	background: var(--color-red);
+	color: var(--text-on-accent);
+}
+.vault-arcade-ms-cell.is-n1 { color: var(--color-blue); }
+.vault-arcade-ms-cell.is-n2 { color: var(--color-green); }
+.vault-arcade-ms-cell.is-n3 { color: var(--color-red); }
+.vault-arcade-ms-cell.is-n4 { color: var(--color-purple); }
+.vault-arcade-ms-cell.is-n5 { color: var(--color-orange); }
+.vault-arcade-ms-cell.is-n6 { color: var(--color-cyan); }
+.vault-arcade-ms-cell.is-n7 { color: var(--text-normal); }
+.vault-arcade-ms-cell.is-n8 { color: var(--text-muted); }
+/* キーボードのカーソル。盤面にキーボードでフォーカスがあるときだけ見せる（タッチでは出ない） */
+.vault-arcade-board:focus-visible .vault-arcade-ms-cell.is-cursor {
+	box-shadow: inset 0 0 0 2px var(--interactive-accent);
+}

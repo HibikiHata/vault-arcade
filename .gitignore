@@ -1,0 +1,20 @@
+# エディタ
+.vscode
+*.iml
+.idea
+
+# npm の依存（npm install で再現できる）
+node_modules
+
+# esbuild の生成物。リポジトリには入れず GitHub Release に添付する
+main.js
+*.map
+
+# Obsidian がプラグイン設定を書き込むファイル（開発用ボールトからリンク越しに書かれる）
+data.json
+
+# macOS Finder
+.DS_Store
+
+# 開発用ボールトの Hot-Reload 用の印（開発用ボールトからリンク越しに置かれる）
+.hotreload

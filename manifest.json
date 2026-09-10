@@ -1,0 +1,11 @@
+{
+	"id": "vault-arcade",
+	"name": "Vault Arcade",
+	"version": "1.3.0",
+	"minAppVersion": "1.13.0",
+	"description": "Play Snake, 2048, Blocks, and Minesweeper inside Obsidian on desktop and mobile, with keyboard or touch, offline. High scores are saved with your vault. More games are coming.",
+	"author": "Hibiki Hata",
+	"authorUrl": "https://github.com/HibikiHata",
+	"fundingUrl": "https://github.com/sponsors/HibikiHata",
+	"isDesktopOnly": false
+}
