@@ -10,7 +10,7 @@ export interface Preset {
 
 /**
  * Minesweeper の状態。盤面は cols×rows の行優先配列を 3 本（地雷 / 開封 / 旗、0 か 1）で持つ。
- * 地雷は初手の開封で置く（placed）。score は開いた安全セルの数。
+ * 地雷は初手の開封で置く（placed）。score は開いた安全セルの数（タイマーは持たない）。
  * カーソルはキーボード操作用で、座標付きの cell 操作でもそのセルへ動く
  */
 export interface MinesweeperState extends GameState {

@@ -21,7 +21,7 @@ export const TAP_MAX_PX = 10;
 export const DRAG_STEP_PX = 24;
 /** CSS クラスの接頭辞。既存の arcade プラグインと衝突させない */
 export const CSS_PREFIX = 'vault-arcade';
-/** セルの長押しを旗と判定する時間（ms）。Minesweeper */
+/** セルの長押しを旗と判定する時間（ms）。Minesweeper の旗立て */
 export const LONG_PRESS_MS = 500;
 /** 長押しの途中表示（押している見た目）を出すまでの時間（ms） */
 export const HOLD_FEEDBACK_MS = 150;

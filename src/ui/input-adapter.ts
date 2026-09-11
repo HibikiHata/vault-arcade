@@ -44,7 +44,7 @@ export function attachInput(
 			repeat: e.repeat,
 			modifier: e.metaKey || e.ctrlKey || e.altKey,
 		};
-		// 消費判定はリピートを無視して行う: リピートで捨てられたキー（Space 長押し等）も 1.1.0 と同じく
+		// 消費判定はリピートを無視して行う: リピートで捨てられたキー（Space 長押し等）も 従来どおり
 		// 握りつぶしてスクロールさせず、修飾キー付きだけを Obsidian に通す
 		if (map({ ...raw, repeat: false }) === null) return;
 		e.preventDefault();

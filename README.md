@@ -17,9 +17,9 @@ Snake and Blocks keep a best score per speed level; 2048 keeps one; Minesweeper 
 
 ## What it stores and does not do
 
-- Settings and high scores live in the plugin's `data.json` inside your vault, so they follow your vault sync. Nothing else is written; no note is read or modified.
+- Settings and high scores live in the plugin's `data.json` inside your vault, so they follow your vault sync. An in-progress game is kept in Obsidian's workspace layout (the view state Obsidian itself saves in `workspace.json`) so a background tab can be restored within the same session. Nothing else is written; no note is read or modified.
 - No network access, no telemetry, no external services.
-- Works on iOS and Android (`isDesktopOnly: false`); requires Obsidian 1.13 or later.
+- Mobile is supported (`isDesktopOnly: false`); tested on iOS, not yet on Android. Requires Obsidian 1.13 or later.
 
 ## Development
 

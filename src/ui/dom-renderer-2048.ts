@@ -2,7 +2,7 @@ import { CSS_PREFIX } from '../constants';
 import type { Board2048State } from '../core/game2048/types';
 import type { GameRenderer } from './games/types';
 
-// 2048 の DOM 描画。色とサイズは CSS クラスで指定し、位置は CSS 変数で渡す。
+// 2048 の DOM 描画（文字を持つタイルは DOM で描く）。色とサイズは CSS クラスで指定し、位置は CSS 変数で渡す。
 // 直前の手（state.lastMove）があれば、各タイルに移動量を与えて CSS トランジションでスライドさせ、
 // 終了後に確定描画する（新タイルは小さく出現、合体先は一瞬拡大）。時間はこの層だけが知る
 

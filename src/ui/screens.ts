@@ -49,14 +49,14 @@ export function renderOverlay(overlay: HTMLElement, model: ScreenModel | null, h
 	overlay.empty();
 	overlay.toggleClass('is-hidden', model === null);
 	overlay.toggleClass(`${CSS_PREFIX}-overlay--dim`, model?.kind === 'paused');
-	// メニューは 3 エントリで盤面より高くなりうるので、このときだけ縦スクロールを許す（CSS と input-adapter が参照）
+	// メニューはエントリの数だけ高くなり盤面より高くなりうるので、このときだけ縦スクロールを許す（CSS と input-adapter が参照）
 	overlay.toggleClass('is-menu', model?.kind === 'menu');
 	if (!model) return;
 
 	const controls = (parent: HTMLElement = overlay): HTMLElement => parent.createDiv({ cls: `${CSS_PREFIX}-controls` });
 
 	if (model.kind === 'menu') {
-		// 見出しは置かない
+		// 見出しは置かない（HUD のタイトルが Vault Arcade を出している）
 		// 速度は 1 つの設定。tick ゲームが 1 つでもあれば、エントリごとではなく上部に 1 行だけ出す
 		const speedGames = model.entries.filter((entry) => entry.hasSpeed).map((entry) => entry.title);
 		if (speedGames.length > 0) {

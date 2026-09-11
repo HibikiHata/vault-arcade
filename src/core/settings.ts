@@ -14,7 +14,7 @@ export type PrefKey = 'speed' | 'minesweeperPreset';
 export const PREF_KEYS: readonly PrefKey[] = ['speed', 'minesweeperPreset'];
 
 /**
- * ハイスコアは平坦なキーで持つ。
+ * ハイスコアは平坦なキーで持つ（Sync のキー単位マージに耐えるため）。
  * tick ゲーム（Snake, Blocks）は速度セレクタが付くので速度ごと、手番駆動の 2048 は1つ
  */
 export type HighScoreKey =

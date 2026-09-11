@@ -420,7 +420,7 @@ export class VaultArcadeView extends ItemView {
 		return s ? `Score: ${s.state.score}` : '';
 	}
 
-	/** HUD のタイトル欄。結果が出た直後は結果ラベルに差し替える */
+	/** HUD のタイトル欄。結果が出た直後は結果ラベルに差し替える（HUD を 1 行に収めるため） */
 	private hudTitleText(): string {
 		const s = this.session;
 		if (!s) return 'Vault Arcade';
@@ -487,7 +487,7 @@ export class VaultArcadeView extends ItemView {
 		if (s) s.renderer.render(s.state);
 		if (!this.overlayEl) return;
 		const model = this.screenModel();
-		// メニュー中は正方形の枠をやめ、内容の高さで表示する。
+		// メニュー中は正方形の枠をやめ、内容の高さで表示する（内側スクロールを無くす）。
 		// ビュー全体は縦パンを許し、adapter はメニュー上のタッチを素通しする
 		const isMenu = model?.kind === 'menu';
 		this.boardEl?.toggleClass('is-menu', isMenu);

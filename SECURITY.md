@@ -25,7 +25,9 @@ security problem here.
   code, and sends no telemetry.
 - **Vault access.** The plugin reads and writes only its own `data.json`
   (settings and high scores) through Obsidian's plugin data API. No note is
-  read or modified, and nothing outside the vault is touched.
+  read or modified, and nothing outside the vault is touched. An in-progress
+  game is kept in the workspace layout through Obsidian's view-state
+  mechanism (written by Obsidian, not by the plugin).
 - **Dependencies.** `main.js` is bundled from this repository's source and has
   no runtime dependency beyond the Obsidian API. The development dependencies
   (esbuild, TypeScript, ESLint, Vitest) do not ship.

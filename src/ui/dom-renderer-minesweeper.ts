@@ -5,7 +5,7 @@ import type { MinesweeperState } from '../core/minesweeper/types';
 import { attachCellInput } from './cell-input';
 import type { GameRenderer } from './games/types';
 
-// Minesweeper の DOM 描画。cols×rows のグリッドを一度作り、
+// Minesweeper の DOM 描画（セルをタップするゲームは DOM で描く）。cols×rows のグリッドを一度作り、
 // render ごとにクラスと文字を更新する。色とサイズは CSS（テーマ変数）に任せる。
 // セル入力は cell-input ヘルパが受け、mount で渡された dispatch へ cell アクションを発行する
 

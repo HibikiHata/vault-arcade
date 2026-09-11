@@ -89,7 +89,7 @@ describe('minesweeperHighScoreKey / isMinesweeperPreset / PREF_KEYS', () => {
 });
 
 describe('blocksHighScoreKey', () => {
-	it('Blocks も速度ごとに平坦なキー名を持つ', () => {
+	it('Blocks も速度ごとに平坦なキー名を持つ（tick ゲームには速度セレクタが付く）', () => {
 		expect(blocksHighScoreKey('slow')).toBe('highScoreBlocksSlow');
 		expect(blocksHighScoreKey('normal')).toBe('highScoreBlocksNormal');
 		expect(blocksHighScoreKey('fast')).toBe('highScoreBlocksFast');

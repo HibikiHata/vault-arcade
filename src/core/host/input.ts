@@ -23,7 +23,7 @@ export function keyToAction(key: string, code: string): HostAction | null {
 	const byKey = KEY_DIRS[key];
 	if (byKey) return { type: 'turn', dir: byKey };
 	if (key === ' ' || code === 'Space') return { type: 'toggle-pause' };
-	// P は全ゲーム共通の一時停止
+	// P は全ゲーム共通の一時停止（Blocks では Space がハードドロップになるため）
 	if (code === 'KeyP') return { type: 'toggle-pause' };
 	if (key === 'Enter') return { type: 'start' };
 	if (key === 'Escape') return { type: 'quit' };
