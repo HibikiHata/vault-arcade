@@ -282,7 +282,8 @@ describe('phase 遷移（AC-061）', () => {
 });
 
 describe('ファズ: 全プリセットで乱数操作', () => {
-	it('例外なし・開封と旗は排他・running 中に開いた地雷は無い・score は開いた安全セル数・地雷数は 0 か規定数', () => {
+	// 3 プリセット × 700 手で既定の 5 秒に掛かることがある（負荷時に実測）。内容ではなく時間の問題なので上限だけ広げる
+	it('例外なし・開封と旗は排他・running 中に開いた地雷は無い・score は開いた安全セル数・地雷数は 0 か規定数', { timeout: 30_000 }, () => {
 		const rng = lcg(3);
 		for (const preset of ['small', 'medium', 'large'] as const) {
 			let s = input(init(rng, preset), { type: 'start' }, rng);
